@@ -480,7 +480,6 @@ def update_profile():
     if "region" in data: user.region = data["region"].lower()
     db.session.commit()
     return jsonify({"ok": True})
-
 @app.route("/api/clear_history", methods=["DELETE"])
 def clear_history():
     sid  = request.args.get("session_id")
@@ -489,7 +488,6 @@ def clear_history():
         Message.query.filter_by(user_id=user.id).delete()
         db.session.commit()
     return jsonify({"ok": True})
-
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "version": "1.1.0", "name": "Solace"})
