@@ -303,7 +303,7 @@ python main.py
 | [Octagon](https://github.com/ik-awais/Octagon) | DSA & OOP — a collaborative learning space for 8 AI students at FAST-NUCES, run through sprints, pull requests, and code reviews. |
 | [Uni_Assignments](https://github.com/ik-awais/Uni_Assignments) | FAST-NUCES BS Artificial Intelligence coursework, lab work & university assignments. |
 | [AI GenMat](https://aigenmat.com) | The AI/ML solutions company I serve as Managing Director — enterprise AI engineering & consulting. |
-| [Portfolio](https://ik-awais.github.io) | Personal portfolio & project showcase, built with Hugo. |
+| [Portfolio](https://ik-awais.github.io) | Personal portfolio, blogs & project showcase, built with Hugo. |
 
 </div>
 
