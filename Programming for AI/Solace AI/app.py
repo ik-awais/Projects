@@ -367,31 +367,26 @@ def chat():
         user.language = lang
 
     ea = analyse_emotion(user_text)
-
     user_msg = Message(
         user_id=user.id, role="user", content=user_text,
         emotion=ea["emotion"], sentiment=ea["sentiment"], language=lang,
     )
     db.session.add(user_msg)
     db.session.flush()
-
     existing_keys = {m.key for m in Memory.query.filter_by(user_id=user.id).all()}
     new_mems = extract_memories(user_text, existing_keys)
     for nm in new_mems:
         db.session.add(Memory(user_id=user.id, **nm))
     db.session.flush()
-
     history_rows = (
         Message.query.filter_by(user_id=user.id)
         .order_by(Message.timestamp.desc())
         .limit(30).all()
     )
     history = [{"role": r.role, "content": r.content} for r in reversed(history_rows)]
-
     memories   = Memory.query.filter_by(user_id=user.id).all()
     region_ctx = get_regional_ctx(user.region)
     sys_prompt = build_system_prompt(user, memories, region_ctx)
-
     reply = ""
     try:
         if provider == "nvidia" and nvidia_key:
@@ -413,13 +408,11 @@ def chat():
             reply = "⚠️ API resource limit hit. Give it a brief pause before trying again."
         else:
             reply = f"⚠️ AI processing failure: {err[:200]}"
-
     db.session.add(Message(
         user_id=user.id, role="assistant",
         content=reply, language=lang,
     ))
     db.session.commit()
-
     return jsonify({
         "reply": reply,
         "emotion": ea["emotion"],
@@ -427,7 +420,6 @@ def chat():
         "language": lang,
         "memories_extracted": len(new_mems),
     })
-
 @app.route("/api/history", methods=["GET"])
 def get_history():
     sid  = request.args.get("session_id")
