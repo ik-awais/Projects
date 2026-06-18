@@ -440,7 +440,6 @@ def get_history():
          "sentiment": m.sentiment, "timestamp": m.timestamp.isoformat()}
         for m in msgs
     ]})
-
 @app.route("/api/memories", methods=["GET"])
 def get_memories():
     sid  = request.args.get("session_id")
@@ -453,7 +452,6 @@ def get_memories():
          "updated_at": m.updated_at.isoformat()}
         for m in mems
     ]})
-
 @app.route("/api/emotion_stats", methods=["GET"])
 def emotion_stats():
     sid  = request.args.get("session_id")
@@ -469,7 +467,6 @@ def emotion_stats():
     avg_s = round(sum(sents) / len(sents), 4) if sents else 0
     return jsonify({"emotion_counts": counts, "average_sentiment": avg_s,
                     "total_messages": len(msgs)})
-
 @app.route("/api/profile", methods=["PATCH"])
 def update_profile():
     data = request.json or {}
