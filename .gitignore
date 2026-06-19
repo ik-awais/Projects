@@ -1,19 +1,43 @@
-__pycache__
-instance
+# Byte-compiled / optimized / Python outputs
+__pycache__/
+instance/
 *.pyc
 *.pyo
 *.pyd
+
+# Databases and State logs
 *.db
 *.sqlite3
 *.log
+
+# Temporary and backup files
 *.bak
 *.tmp
+
+# Environment and Virtual Environments
+.env
+.env.*
 *.env
-*.venv
-*.egg-info
-dist
-build
+# Ensure .env.example is explicitly tracked per your design
+!.env.example
+*.venv/
+.venv/
+venv/
+
+# Packaging and Distributions
+dist/
+build/
 *.egg
-*.egg-info
 *.egg-info/
 *.egg-info/*
+
+# Frontend dependencies and Next.js builds
+node_modules/
+.next/
+out/
+
+# IDEs and System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
