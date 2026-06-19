@@ -1,42 +1,85 @@
-# Byte-compiled / optimized / Python outputs
+# ====================================================================
+# MULTI-PROJECT WORKSPACE .GITIGNORE
+# ====================================================================
+
+# --------------------------------------------------------------------
+# 1. Python Outputs & Caches (NovaMind AI & Solace AI)
+# --------------------------------------------------------------------
 __pycache__/
-instance/
 *.pyc
 *.pyo
 *.pyd
+instance/
 
-# Databases and State logs
+# --------------------------------------------------------------------
+# 2. C++ Game Build & Caches (nfs_clone / compiler)
+# --------------------------------------------------------------------
+# Target explicit native compilation outputs and cache logs
+CMakeCache.txt
+CMakeFiles/
+CMakeConfigureLog.yaml
+CMakeDirectoryInformation.cmake
+CMakeScratch/
+Makefile
+Makefile2
+Makefile.cmake
+cmake_install.cmake
+progress.marks
+TargetDirectories.txt
+pkgRedirects/
+
+# Ignore compiled binaries, object files, and dependency trees
+*.o
+*.o.d
+*.bin
+/games/nfs_clone/build/
+/games/nfs_clone/stubs/
+a.out
+
+# --------------------------------------------------------------------
+# 3. Frontend Node Dependencies & Build Targets (NovaMind AI)
+# --------------------------------------------------------------------
+node_modules/
+.next/
+out/
+.pnp
+.pnp.js
+*.tsbuildinfo
+next-env.d.ts
+
+# --------------------------------------------------------------------
+# 4. Databases, Backups, and State Logs
+# --------------------------------------------------------------------
 *.db
 *.sqlite3
 *.log
-
-# Temporary and backup files
 *.bak
 *.tmp
 
-# Environment and Virtual Environments
+# --------------------------------------------------------------------
+# 5. Environments and Variable Secrets
+# --------------------------------------------------------------------
 .env
 .env.*
 *.env
-# Ensure .env.example is explicitly tracked per your design
-!.env.example
 *.venv/
 .venv/
 venv/
 
-# Packaging and Distributions
+# CRITICAL EXCEPTION: Keep tracked template variables active in layer workflow
+!.env.example
+
+# --------------------------------------------------------------------
+# 6. Packaging and Distributions
+# --------------------------------------------------------------------
 dist/
 build/
 *.egg
 *.egg-info/
-*.egg-info/*
 
-# Frontend dependencies and Next.js builds
-node_modules/
-.next/
-out/
-
-# IDEs and System files
+# --------------------------------------------------------------------
+# 7. IDE Profiles and OS Garbage
+# --------------------------------------------------------------------
 .vscode/
 .idea/
 .DS_Store
