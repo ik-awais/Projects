@@ -10,11 +10,14 @@ __pycache__/
 *.pyo
 *.pyd
 instance/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # --------------------------------------------------------------------
 # 2. C++ Game Build & Caches (nfs_clone / compiler)
 # --------------------------------------------------------------------
-# Target explicit native compilation outputs and cache logs
 CMakeCache.txt
 CMakeFiles/
 CMakeConfigureLog.yaml
@@ -28,7 +31,6 @@ progress.marks
 TargetDirectories.txt
 pkgRedirects/
 
-# Ignore compiled binaries, object files, and dependency trees
 *.o
 *.o.d
 *.bin
@@ -59,15 +61,24 @@ next-env.d.ts
 # --------------------------------------------------------------------
 # 5. Environments and Variable Secrets
 # --------------------------------------------------------------------
+# Ignore every real env file, in any project, at any depth.
 .env
 .env.*
 *.env
-*.venv/
 .venv/
 venv/
 
-# CRITICAL EXCEPTION: Keep tracked template variables active in layer workflow
+# Exception: template/example env files are safe and SHOULD be tracked,
+# since they document required variables without containing real secrets.
+# These negations must come after the broad ignores above, and git
+# requires the parent directory itself not be ignored for a negation to
+# take effect — none of the rules above ignore directories by name, so
+# this works at any depth (backend/.env.example, frontend/.env.example,
+# solace-ai/.env.example, etc.) without needing a separate line per project.
 !.env.example
+!**/.env.example
+!.env.sample
+!**/.env.sample
 
 # --------------------------------------------------------------------
 # 6. Packaging and Distributions
@@ -75,7 +86,7 @@ venv/
 dist/
 build/
 *.egg
-*.egg-info/
+
 # --------------------------------------------------------------------
 # 7. IDE Profiles and OS Garbage
 # --------------------------------------------------------------------
@@ -83,3 +94,9 @@ build/
 .idea/
 .DS_Store
 Thumbs.db
+
+# --------------------------------------------------------------------
+# 8. NovaMind-specific working files (not part of the deliverable)
+# --------------------------------------------------------------------
+_quarantine/
+*Current Progress*.txt
