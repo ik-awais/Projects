@@ -56,6 +56,16 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         cascade="all, delete-orphan",
         lazy="selectin",
     )
+# Add to backend/app/models/user.py — the single new relationship line
+# needed for User → Conversations traversal. Insert immediately after
+# the existing refresh_tokens relationship.
 
+    conversations: Mapped[list["Conversation"]] = relationship(
+        "Conversation",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        order_by="Conversation.updated_at.desc()",
+        lazy="selectin",
+    )
     def __repr__(self) -> str:
         return f"<User id={self.id} email={self.email!r}>"
