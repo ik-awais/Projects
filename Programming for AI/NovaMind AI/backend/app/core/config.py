@@ -49,7 +49,7 @@ class Settings(BaseSettings):
 
     # ── Search providers ──────────────────────────────────────────────
     TAVILY_API_KEY: str = Field(..., description="Tavily search API key")
-    BRAVE_API_KEY: str = Field(..., description="Brave search API key")
+    FIRECRAWL_API_KEY: str = Field(..., description="Firecrawl search API key")
 
     # ── SMTP (email verification / password reset) ───────────────────
     SMTP_HOST: str = Field(default="")

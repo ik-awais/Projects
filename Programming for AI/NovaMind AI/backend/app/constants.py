@@ -57,7 +57,7 @@ SEARCH_MODE_CONTEXT_TOKEN_BUDGET: dict[str, int] = {
 
 class SearchProviderName(str, Enum):
     TAVILY = "tavily"
-    BRAVE = "brave"
+    FIRECRAWL = "firecrawl"
 
 
 SEARCH_PROVIDER_TIMEOUT_SECONDS: float = 5.0
