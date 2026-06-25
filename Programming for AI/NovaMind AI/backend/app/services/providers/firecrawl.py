@@ -106,12 +106,19 @@ class FirecrawlSearchProvider(SearchProvider):
                 self.provider_name,
                 f"Firecrawl API returned success=false: {payload.get('error', 'unknown error')}",
             )
-
-        raw_results = payload.get("data")
+ 
+        data_obj = payload.get("data")
+        if data_obj is None or not isinstance(data_obj, dict):
+            raise SearchProviderError(
+                self.provider_name,
+                "Malformed response: expected a 'data' object, got "
+                f"{type(data_obj).__name__}.",
+            )
+        raw_results = data_obj.get("web")
         if raw_results is None or not isinstance(raw_results, list):
             raise SearchProviderError(
                 self.provider_name,
-                "Malformed response: expected a 'data' list, got "
+                "Malformed response: expected 'data.web' to be a list, got "
                 f"{type(raw_results).__name__}.",
             )
 
@@ -124,13 +131,12 @@ class FirecrawlSearchProvider(SearchProvider):
             if not url or not title:
                 continue
 
-            # Firecrawl returns results in ranked order but does not
-            # expose a numeric relevance score without scrapeOptions.
-            # A deterministic position-based score is synthesized so the
-            # SearchResult contract (score: float, always populated) is
-            # met consistently, matching Brave's same approach in Batch 8.
+            # Firecrawl returns an explicit "position" field (1-based rank).
+            # Convert to a 0.0-1.0 descending score: position 1 → 1.0,
+            # position 2 → lower, etc. Falls back to index if field absent.
+            position = int(raw.get("position", index + 1))
             position_score = max(
-                0.0, 1.0 - (index * (1.0 / max(len(raw_results), 1)))
+                0.0, 1.0 - ((position - 1) * (1.0 / max(len(raw_results), 1)))
             )
 
             results.append(
