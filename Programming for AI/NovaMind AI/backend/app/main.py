@@ -16,8 +16,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
 from app.api.v1.auth import router as auth_router
+from app.api.v1.search import router as search_router
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
 from app.db.session import dispose_engine
@@ -120,11 +120,5 @@ async def health_check() -> dict[str, str]:
         "environment": settings.APP_ENV,
     }
 
-
 app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
-
-# Future routers are registered here as they are generated:
-#   app.include_router(search_router, prefix=settings.API_V1_PREFIX)
-#   app.include_router(conversations_router, prefix=settings.API_V1_PREFIX)
-#   app.include_router(documents_router, prefix=settings.API_V1_PREFIX)
-#   app.include_router(settings_router, prefix=settings.API_V1_PREFIX)
+app.include_router(search_router, prefix=settings.API_V1_PREFIX)
