@@ -14,7 +14,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.constants import UserPlan
 from app.db.base import Base, TimestampMixin, UUIDPrimaryKeyMixin
 
-
 class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "users"
 
@@ -59,12 +58,10 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 # Add to backend/app/models/user.py — the single new relationship line
 # needed for User → Conversations traversal. Insert immediately after
 # the existing refresh_tokens relationship.
-
     conversations: Mapped[list["Conversation"]] = relationship(
         "Conversation",
         back_populates="user",
         cascade="all, delete-orphan",
-        order_by="Conversation.updated_at.desc()",
         lazy="selectin",
     )
     def __repr__(self) -> str:

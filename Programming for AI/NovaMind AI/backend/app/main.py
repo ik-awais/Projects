@@ -23,6 +23,18 @@ from app.core.logging import configure_logging, get_logger
 from app.db.session import dispose_engine
 from app.exceptions import NovaMindError
 
+
+# Import all ORM models so SQLAlchemy's mapper registry has every class
+# registered before any request triggers mapper configuration. Without
+# this, string-based relationship() references like "Conversation" fail
+# at runtime when only User is imported through the auth dependency chain.
+from app.models.conversation import Conversation  # noqa: F401
+from app.models.message import Message  # noqa: F401
+from app.models.refresh_token import RefreshToken  # noqa: F401
+from app.models.search import Search  # noqa: F401
+from app.models.source import Source  # noqa: F401
+from app.models.user import User  # noqa: F401
+
 APP_VERSION = "0.1.0"
 
 logger = get_logger(__name__)
